@@ -32,14 +32,32 @@ artist2 = Artist.new({
     })
 
 
-  album1.save()
-  album2.save()
+album1.save()
+album2.save()
 
 all_albums = Album.all
 all_artists = Artist.all
 
 album2.artist
 artist2.albums
+
+album2.title = 'Dookie'
+
+album2.update()
+
+artist2.name = 'Deck Neep'
+#
+artist2.update()
+
+# album1.delete
+artist1.delete
+
+artist2.find
+
+album1.find
+
+
+
 
 binding.pry
 nil

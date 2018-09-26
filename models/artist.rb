@@ -7,7 +7,7 @@ class Artist
   attr_accessor(:name)
 
   def initialize(options)
-    @id = options['id']
+    @id = options['id'].to_i
     @name = options['name']
   end
 
@@ -57,6 +57,56 @@ class Artist
       Album.new(album)
     end
     return results_objects
+
+  end
+
+  def update()
+    sql = "
+    UPDATE artists
+    SET name = $1
+    WHERE id = $2;
+    "
+    values = [@name, @id]
+
+    SqlRunner.run(sql, values)
+
+  end
+
+
+
+  def delete()
+    #delete all albums by this artist
+    sqla = "
+    DELETE FROM albums
+    WHERE artist_id = $1;
+    "
+    valuesa = [@id]
+
+    SqlRunner.run(sqla, valuesa)
+    #then delete artist
+
+    sqlb = "
+    DELETE FROM artists
+    WHERE id = $1;
+    "
+    valuesb = [@id]
+
+    SqlRunner.run(sqlb, valuesb)
+  end
+
+  def find()
+    sql = "
+    SELECT * FROM artists
+    WHERE id = $1;
+    "
+
+    values = [@id]
+
+    artist_hash = SqlRunner.run(sql, values)
+    artist_object = artist_hash.map do |artist|
+      Artist.new(artist)
+    end
+    return artist_object
 
   end
 
