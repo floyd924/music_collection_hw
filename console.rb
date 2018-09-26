@@ -31,6 +31,15 @@ artist2 = Artist.new({
     'artist_id' => artist1.id
     })
 
-    
+
   album1.save()
   album2.save()
+
+all_albums = Album.all
+all_artists = Artist.all
+
+album2.artist
+artist2.albums
+
+binding.pry
+nil
