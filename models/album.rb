@@ -1,5 +1,5 @@
 require('pg')
-require_relative('./db/sql_runner.rb')
+require_relative('../db/sql_runner.rb')
 
 class Album
 
@@ -19,6 +19,18 @@ class Album
     "
     SqlRunner.run(sql)
 
+  end
+
+  def save()
+    sql = "INSERT INTO albums (title, genre, artist_id)
+    VALUES ($1, $2, $3)
+    RETURNING id;
+    "
+    values = [@title, @genre, @artist_id]
+
+    results = SqlRunner.run(sql, values)
+
+    @id = results[0]['id'].to_i
   end
 
 

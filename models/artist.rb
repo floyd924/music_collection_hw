@@ -1,5 +1,5 @@
 require('pg')
-require_relative('./db/sql_runner.rb')
+require_relative('../db/sql_runner.rb')
 
 class Artist
 
@@ -16,6 +16,21 @@ class Artist
     DELETE FROM artists;
     "
     SqlRunner.run(sql)
+
+  end
+
+
+  def save()
+    sql = "
+    INSERT INTO artists (name)
+    VALUES ($1)
+    RETURNING id;
+    "
+    values = [@name]
+
+    results = SqlRunner.run(sql, values)
+
+    @id = results[0]['id'].to_i
 
   end
 
